@@ -33,7 +33,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO 自動生成されたメソッド・スタブ
-		db.execSQL("drop table Hitokoto");
+		db.execSQL("drop table Hitokoto;");
 		onCreate(db);
 
 	}
@@ -47,7 +47,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 				//トランザクション成功
 				db.setTransactionSuccessful();
 			}catch(SQLException e){
-				Log.e("ERROR",e.toString());
+				Log.e("ERROR", e.toString());
 			}finally{
 				//トランザクション終了
 				db.endTransaction();

@@ -26,16 +26,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
     Button btn3 = (Button)findViewById(R.id.button3);
     btn3.setOnClickListener(this);
     
-    //クラスのフィールド変数がnullなら、データベース空間オープン
-    if(sdb == null){
-    	helper = new MySQLiteOpenHelper(getApplicationContext());
-    }
-    try{
-    	sdb = helper.getWritableDatabase();
-    }catch(SQLiteException e){
-    	//異常終了
-    	return;
-    }
+	    //クラスのフィールド変数がnullなら、データベース空間オープン
+	    if(sdb == null){
+	    	helper = new MySQLiteOpenHelper(getApplicationContext());
+	    }
+	    try{
+	    	sdb = helper.getWritableDatabase();
+	    }catch(SQLiteException e){
+	    	//異常終了
+	    	return;
+	    }
 	}
 	
 	
