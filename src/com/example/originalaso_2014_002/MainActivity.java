@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	public void onClick(View v){
 		Intent intent = null;
 		switch(v.getId()){
-		case R.id.button1:
+		case R.id.button1://メンテボタンが押された
 			intent = new Intent(this, DeleteActivity.class);
 			startActivity(intent);
 			break;
@@ -78,6 +78,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			
 			startActivity(intent);
 			break;
+			
+		
 		}
 	}
 	
