@@ -25,7 +25,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO 自動生成されたメソッド・スタブ
-		db.execSQL("create table if not exists" +
+		db.execSQL("CREATE TABLE IF NOT EXISTS " +
 				"Hitokoto(_id integer primary key autoincrement not null , phrase text)");
 
 	}
@@ -86,7 +86,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		
 		SQLiteCursor cursor = null;
 		
-		String sqlstr = "SELECT _id, phrase FROM Hitokoto DRDER BY _id;";
+		String sqlstr = "SELECT _id, phrase FROM Hitokoto ORDER BY _id;";
 		try{
 			//トランザクション開始
 			cursor = (SQLiteCursor)db.rawQuery(sqlstr, null);

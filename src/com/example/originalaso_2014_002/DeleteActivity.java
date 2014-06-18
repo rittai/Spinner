@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,12 +16,13 @@ import android.widget.ListView;
  * @author masatoge
  */
 
-public class DeleteActivity extends Activity implements view.OnClickLister,AdapterView.OnItemClickListener{
+public class DeleteActivity extends Activity implements
+	View.OnClickListener,AdapterView.OnItemClickListener{
 
 	//SQLiteデータベース空間を操作するインスタンス変数を宣言
 			SQLiteDatabase sdb = null;
 			//MySQLiteOpenHelperを操作するインスタンス変数を宣言
-			MySQLiteOpenHelper helpr = null;
+			MySQLiteOpenHelper helper = null;
 			
 			//リストにて選択したHitokotoテーブルのレコードの[_id]カラム値を保存する変数の宣言
 			int selectedID = -1;
@@ -90,5 +92,15 @@ public class DeleteActivity extends Activity implements view.OnClickLister,Adapt
 		 //アダプターを設定します
 		 lstHitokoto.setAdapter(adapter);
 	 }
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
 }
 
