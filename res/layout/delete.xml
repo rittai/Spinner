@@ -32,7 +32,11 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="74dp"
             android:text="削除" />
+        
+        
 
     </RelativeLayout>
+    
+    
 
 </LinearLayout>

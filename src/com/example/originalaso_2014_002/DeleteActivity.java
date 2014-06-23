@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * @author masatoge
@@ -96,11 +98,80 @@ public class DeleteActivity extends Activity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO 自動生成されたメソッド・スタブ
 		
+		//前に選択中の行があれば、背景色を透明にする
+		if(this.selectedID!=-1){
+			parent.getChildAt(this.lastPosition).setBackgroundColor(0);
+		}
+		//選択中の行の背景色をグレーにする
+		view.setBackgroundColor(android.graphics.Color.LTGRAY);
+		
+		//選択行のレコードを指し示すカーソルを取得
+		SQLiteCursor cursor = (SQLiteCursor)parent.getItemAtPosition(position);
+		//カーソルのレコードから、「_id」の値を取得して記憶
+		this.selectedID = cursor.getInt(cursor.getColumnIndex("_id"));
+		//何行目を選択したかも記憶
+		this.lastPosition = position;
 	}
 	@Override
 	public void onClick(View v) {
 		// TODO 自動生成されたメソッド・スタブ
 		
+		switch(v.getId()){//どのボタンが押されたか判定
+			case R.id.button2: //削除ボタンが押された
+				
+				//選択行があれば
+				if(this.selectedID != -1){
+					this.deleteFromHitokoto(this.selectedID);
+					ListView lstHitokoto = (ListView)findViewById(R.id.listView1);
+					//ListViewにＤＢをセット
+					this.setDBValuetoList(lstHitokoto);
+					//選択行を忘れる
+					this.selectedID = -1;
+					this.lastPosition = -1;
+				}
+				else{
+					ImageView vv = new ImageView(this);
+					vv.setImageResource(R.drawable.yubi);
+					Toast toast = new Toast(this);
+					
+					//toast.setDuration(Toast.LENGTH_LONG);
+					toast.setView(vv);
+					
+					Toast.makeText(DeleteActivity.this, "削除する行を選びなさい", Toast.LENGTH_SHORT).show();
+					toast.show();
+					
+					
+					
+					//LayoutInflater inflater = getLayoutInflater();
+					//View vv = inflater.inflate(R.layout.iv, null);
+					//Toast toast = new Toast(this);
+					//toast.setDuration(Toast.LENGTH_SHORT);
+					//Toast.makeText(DeleteActivity.this, "削除する行を選んでください", Toast.LENGTH_SHORT).show();
+					//toast.setView(vv);
+				}
+				break;
+			case R.id.button1://戻るボタンが押された
+				//今の画面Activityを消して、前の画面Activityに戻る
+				finish();
+				break;
+				
+		}
+		
+	}
+	private void deleteFromHitokoto(int id) {
+		// TODO 自動生成されたメソッド・スタブ
+		//クラスのフィールド変数がＮＵＬＬなら、データベース空間オープン
+		if(sdb == null){
+			helper = new MySQLiteOpenHelper(getApplicationContext());
+		}
+		try{
+			sdb = helper.getWritableDatabase();
+		}catch(SQLiteException e){
+			//以上終了
+			Log.e("ERROR",e.toString());
+		}
+		//MySQLiteOpenHelperにDELETE文を実行させる
+		this.helper.deleteHitokoto(sdb, id);
 	}
 }
 
