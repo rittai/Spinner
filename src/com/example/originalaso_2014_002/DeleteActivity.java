@@ -7,11 +7,13 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -130,6 +132,21 @@ public class DeleteActivity extends Activity implements
 					this.lastPosition = -1;
 				}
 				else{
+					LayoutInflater inflater = getLayoutInflater();
+					View layout = inflater.inflate(R.layout.iv, null);
+					
+					ImageView image = (ImageView)layout.findViewById(R.id.img);
+					image.setImageResource(R.drawable.yubi);
+					
+					TextView text = (TextView)layout.findViewById(R.id.text);
+					text.setText("さ、削除する行を選択しなさい!!");
+					text.setTextColor(0xffff0000);
+					
+					Toast toast = new Toast(this);
+					toast.setView(layout);
+					toast.show();
+					
+					/*
 					ImageView vv = new ImageView(this);
 					vv.setImageResource(R.drawable.yubi);
 					Toast toast = new Toast(this);
@@ -137,17 +154,19 @@ public class DeleteActivity extends Activity implements
 					//toast.setDuration(Toast.LENGTH_LONG);
 					toast.setView(vv);
 					
-					Toast.makeText(DeleteActivity.this, "削除する行を選びなさい", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(DeleteActivity.this, "削除する行を選びなさい", Toast.LENGTH_LONG);
 					toast.show();
+					*/
 					
 					
-					
+					/*
 					//LayoutInflater inflater = getLayoutInflater();
 					//View vv = inflater.inflate(R.layout.iv, null);
 					//Toast toast = new Toast(this);
 					//toast.setDuration(Toast.LENGTH_SHORT);
 					//Toast.makeText(DeleteActivity.this, "削除する行を選んでください", Toast.LENGTH_SHORT).show();
 					//toast.setView(vv);
+					 */
 				}
 				break;
 			case R.id.button1://戻るボタンが押された
