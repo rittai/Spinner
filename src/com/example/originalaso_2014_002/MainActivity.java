@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,12 +58,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		case R.id.button2://登録ボタンが押された
 			//エディットテキストからの入力内容を取り出す
 			EditText etv = (EditText)findViewById(R.id.editText1);
+			EditText etv2 = (EditText)findViewById(R.id.editText2);
+			
 			String inputMsg = etv.getText().toString();
+			Log.d(inputMsg, inputMsg);
+			String inputmsg2 = etv2.getText().toString();
+			Log.d(inputmsg2,inputmsg2);
+			
+
 			
 			//inputMsgがnullでない、かつ、空でない場合のみ、if内容を実行
 			if(inputMsg!=null && !inputMsg.isEmpty()){
 				//MySQLiteOpenHelperのインサートメソッドを呼び出し
-				helper.insertHitokoto(sdb, inputMsg);
+				helper.insertHitokoto(sdb, inputMsg,inputmsg2);
 			}
 			//入力欄をクリア
 			etv.setText("");

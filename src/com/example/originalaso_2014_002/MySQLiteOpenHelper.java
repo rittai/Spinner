@@ -17,7 +17,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 */
 	
 	public MySQLiteOpenHelper(Context context){
-		super(context,"20140021201762.sqlite3",null,1);
+		super(context,"20140021201762.sqlite3",null,3);
 	}
 	
 	
@@ -26,7 +26,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO 自動生成されたメソッド・スタブ
 		db.execSQL("CREATE TABLE IF NOT EXISTS " +
-				"Hitokoto(_id integer primary key autoincrement not null , phrase text)");
+				"Hitokoto(id integer primary key  not null , pass text)");
 
 	}
 
@@ -38,8 +38,10 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
 	}
 	
-	public void insertHitokoto(SQLiteDatabase db,String inputMsg){
-		String sqlstr = " insert into Hitokoto (phrase) values('" + inputMsg + "');";
+	public void insertHitokoto(SQLiteDatabase db,String inputMsg,String inputmsg2){
+		Log.d(inputMsg,inputMsg);
+		Log.d(inputmsg2,inputmsg2);
+		String sqlstr = " insert into Hitokoto (id,pass) values('" + inputMsg +"','" +inputmsg2 + "');";
 			try{
 				//トランザクション開始
 				db.beginTransaction();
@@ -59,7 +61,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		
 		String rtString = null;
 		
-		String sqlstr = "SELECT _id, phrase FROM Hitokoto ORDER BY RANDOM();";
+		String sqlstr = "SELECT id, pass FROM Hitokoto ORDER BY RANDOM();";
 			try{
 				//トランザクション開始
 				SQLiteCursor cursor = (SQLiteCursor)db.rawQuery(sqlstr,null);
@@ -86,7 +88,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		
 		SQLiteCursor cursor = null;
 		
-		String sqlstr = "SELECT _id, phrase FROM Hitokoto ORDER BY _id;";
+		String sqlstr = "SELECT id, pass FROM Hitokoto ORDER BY id;";
 		try{
 			//トランザクション開始
 			cursor = (SQLiteCursor)db.rawQuery(sqlstr, null);
@@ -113,7 +115,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 */
 	public void deleteHitokoto(SQLiteDatabase db, int id){
 		
-		String sqlstr = "DELETE FROM Hitokoto where _id="+ id +";";
+		String sqlstr = "DELETE FROM Hitokoto where id="+ id +";";
 		try{
 			//トランザクション開始
 			db.beginTransaction();

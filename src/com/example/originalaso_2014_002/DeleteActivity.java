@@ -84,7 +84,7 @@ public class DeleteActivity extends Activity implements
 		 //dblayout:ListViewにさらにレイアウトを指定するもの
 		 int db_layout = android.R.layout.simple_list_item_activated_1;
 		 //form:カーソルからListViewに指定するカラムの値を指定するもの
-		 String[]from = {"phrase"};
+		 String[]from = {"pass"};
 		 //to:Listviewの中に指定したdb_layoutに配置する、各行のview部品のid
 		 int[] to = new int[]{android.R.id.text1};
 		 
@@ -110,7 +110,7 @@ public class DeleteActivity extends Activity implements
 		//選択行のレコードを指し示すカーソルを取得
 		SQLiteCursor cursor = (SQLiteCursor)parent.getItemAtPosition(position);
 		//カーソルのレコードから、「_id」の値を取得して記憶
-		this.selectedID = cursor.getInt(cursor.getColumnIndex("_id"));
+		this.selectedID = cursor.getInt(cursor.getColumnIndex("id"));
 		//何行目を選択したかも記憶
 		this.lastPosition = position;
 	}
