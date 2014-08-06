@@ -8,20 +8,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
-
 	/**
 	 * @param context 呼び出しコンテクスト
 	 * @param name 利用DB名
 	 * @param factory カーソルファクトリー
 	 * @param version DBバージョン
 	 */
-	
+
 	public MySQLiteOpenHelper(Context context){
 		super(context,"20140021201762.sqlite3",null,5);
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO 自動生成されたメソッド・スタブ
@@ -37,7 +36,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		onCreate(db);
 
 	}
-	
+
 	public void insertHitokoto(SQLiteDatabase db,String inputMsg,String inputmsg2,String flg){
 		Log.d(inputMsg,inputMsg);
 		Log.d(inputmsg2,inputmsg2);
@@ -56,11 +55,11 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			return;
 	}
-	
+
 	public String selectRandomHitokoto(SQLiteDatabase db){
-		
+
 		String rtString = null;
-		
+
 		String sqlstr = "SELECT _id, pass FROM Hitokoto ORDER BY RANDOM();";
 			try{
 				//トランザクション開始
@@ -78,38 +77,57 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			return rtString;
 	}
-	
-	public void login(SQLiteDatabase db,String idmsg){
-		
+
+	public String login(SQLiteDatabase db,String idmsg,String passmsg){
+
+		String flgString = null;
 		//学籍番号とDBの_idを比較
-		String sqllogin = "SELECT flg FROM Hitokoto WHERE '1201762' = _id;";
-		
+		String sqllogin = "SELECT _id,pass FROM Hitokoto WHERE '"+ idmsg +"' = _id ;";
+
 		try{
 			//トランザクション開始
-			db.beginTransaction();
-			db.execSQL(sqllogin);
-			//トランザクション成功
-			db.setTransactionSuccessful();
+			SQLiteCursor cursor = (SQLiteCursor)db.rawQuery(sqllogin,null);
+			cursor.moveToFirst();
+			//DB 指定列のインデックス取得
+			int index_id    =   cursor.getColumnIndex("_id");
+			int indexpass    =   cursor.getColumnIndex("pass");
+			//DB インデックスに対応した値を取得
+			String id = cursor.getString(index_id);
+			String pass = cursor.getString(indexpass);
+
+
+			if(idmsg.equals(id) && passmsg.equals(pass)){
+				flgString = "SELECT flg FROM Hitokoto WHERE _id = '" + id + "' ;";
+				SQLiteCursor cursor2 = (SQLiteCursor)db.rawQuery(flgString,null);
+				if(cursor2.getCount()!=0){
+					//カーソル開始位置を先頭にする
+					cursor2.moveToFirst();
+					flgString = cursor2.getString(0);
+				}
+			}else{
+				flgString = "miss";
+			}
+			cursor.close();
+
 		}catch(SQLException e){
 			Log.e("ERROR", e.toString());
 		}finally{
-			//トランザクション終了
-			db.endTransaction();
+			//すでにカーソルもcloseしてあるので、何もしない
 		}
-		return;
-	
+		return flgString ;
+
 	}
-	
-	
+
+
 	/**
 	 * Hitokotoテーブルからデータをすべて取得
 	 * @param SQLいてDatabase SELECTアクセスするDBのインスタンス変数
 	 * @return 取得したデータの塊の表（導出表）のレコードをポイントするカーソル
 	 */
 	public SQLiteCursor selectHitokotoList(SQLiteDatabase db){
-		
+
 		SQLiteCursor cursor = null;
-		
+
 		String sqlstr = "SELECT _id, pass FROM Hitokoto ORDER BY _id;";
 		try{
 			//トランザクション開始
@@ -120,23 +138,23 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			//cursorlは呼び出し元へ返すからここではcloseしない
 			//cursor.close();
-			
+
 		}catch(SQLException e){
 			Log.e("ERROR", e.toString());
 		}finally{
-			
+
 		}
 		return cursor;
-	
+
 	}
-	
+
 	/**
 	 * Hitokoto表から引数（id）で指定した値とカラム「_id」の値が等しいレコードを削除
 	 * @param SQLiteDatabase DELETEアクセスするDBのインスタンス変数
 	 * @param id カラム「_id」と比較するために指定する削除条件の値
 	 */
 	public void deleteHitokoto(SQLiteDatabase db, int _id){
-		
+
 		String sqlstr = "DELETE FROM Hitokoto where _id="+ _id +";";
 		try{
 			//トランザクション開始
@@ -150,7 +168,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			//トランザクション終了
 			db.endTransaction();
 		}
-		
+
 	}
 
 
