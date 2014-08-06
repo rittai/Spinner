@@ -17,7 +17,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 */
 	
 	public MySQLiteOpenHelper(Context context){
-		super(context,"20140021201762.sqlite3",null,3);
+		super(context,"20140021201762.sqlite3",null,5);
 	}
 	
 	
@@ -26,7 +26,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO 自動生成されたメソッド・スタブ
 		db.execSQL("CREATE TABLE IF NOT EXISTS " +
-				"Hitokoto(id integer primary key  not null , pass text)");
+				"Hitokoto(_id integer primary key  not null , pass text, flg integer)");
 
 	}
 
@@ -38,10 +38,10 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
 	}
 	
-	public void insertHitokoto(SQLiteDatabase db,String inputMsg,String inputmsg2){
+	public void insertHitokoto(SQLiteDatabase db,String inputMsg,String inputmsg2,String flg){
 		Log.d(inputMsg,inputMsg);
 		Log.d(inputmsg2,inputmsg2);
-		String sqlstr = " insert into Hitokoto (id,pass) values('" + inputMsg +"','" +inputmsg2 + "');";
+		String sqlstr = " insert into Hitokoto (_id,pass,flg) values('" + inputMsg +"','" +inputmsg2 + "','" + flg + "');";
 			try{
 				//トランザクション開始
 				db.beginTransaction();
@@ -61,7 +61,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		
 		String rtString = null;
 		
-		String sqlstr = "SELECT id, pass FROM Hitokoto ORDER BY RANDOM();";
+		String sqlstr = "SELECT _id, pass FROM Hitokoto ORDER BY RANDOM();";
 			try{
 				//トランザクション開始
 				SQLiteCursor cursor = (SQLiteCursor)db.rawQuery(sqlstr,null);
@@ -79,6 +79,28 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			return rtString;
 	}
 	
+	public void login(SQLiteDatabase db,String idmsg){
+		
+		
+		String sqllogin = "SELECT flg FROM Hitokoto WHERE '1201762' = _id;";
+		
+		try{
+			//トランザクション開始
+			db.beginTransaction();
+			db.execSQL(sqllogin);
+			//トランザクション成功
+			db.setTransactionSuccessful();
+		}catch(SQLException e){
+			Log.e("ERROR", e.toString());
+		}finally{
+			//トランザクション終了
+			db.endTransaction();
+		}
+		return;
+	
+	}
+	
+	
 	/**
 	 * Hitokotoテーブルからデータをすべて取得
 	 * @param SQLいてDatabase SELECTアクセスするDBのインスタンス変数
@@ -88,7 +110,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		
 		SQLiteCursor cursor = null;
 		
-		String sqlstr = "SELECT id, pass FROM Hitokoto ORDER BY id;";
+		String sqlstr = "SELECT _id, pass FROM Hitokoto ORDER BY _id;";
 		try{
 			//トランザクション開始
 			cursor = (SQLiteCursor)db.rawQuery(sqlstr, null);
@@ -113,9 +135,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 * @param SQLiteDatabase DELETEアクセスするDBのインスタンス変数
 	 * @param id カラム「_id」と比較するために指定する削除条件の値
 	 */
-	public void deleteHitokoto(SQLiteDatabase db, int id){
+	public void deleteHitokoto(SQLiteDatabase db, int _id){
 		
-		String sqlstr = "DELETE FROM Hitokoto where id="+ id +";";
+		String sqlstr = "DELETE FROM Hitokoto where _id="+ _id +";";
 		try{
 			//トランザクション開始
 			db.beginTransaction();

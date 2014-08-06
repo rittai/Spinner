@@ -26,6 +26,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     btn2.setOnClickListener(this);
     Button btn3 = (Button)findViewById(R.id.button3);
     btn3.setOnClickListener(this);
+    Button btn4 = (Button)findViewById(R.id.button4);
+    btn4.setOnClickListener(this);
     
 	    //クラスのフィールド変数がnullなら、データベース空間オープン
 	    if(sdb == null){
@@ -59,21 +61,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			//エディットテキストからの入力内容を取り出す
 			EditText etv = (EditText)findViewById(R.id.editText1);
 			EditText etv2 = (EditText)findViewById(R.id.editText2);
+			EditText etv3 = (EditText)findViewById(R.id.editText3);
 			
 			String inputMsg = etv.getText().toString();
 			Log.d(inputMsg, inputMsg);
 			String inputmsg2 = etv2.getText().toString();
 			Log.d(inputmsg2,inputmsg2);
+			String flg = etv3.getText().toString();
 			
 
 			
 			//inputMsgがnullでない、かつ、空でない場合のみ、if内容を実行
 			if(inputMsg!=null && !inputMsg.isEmpty()){
 				//MySQLiteOpenHelperのインサートメソッドを呼び出し
-				helper.insertHitokoto(sdb, inputMsg,inputmsg2);
+				helper.insertHitokoto(sdb, inputMsg,inputmsg2,flg);
 			}
 			//入力欄をクリア
 			etv.setText("");
+			etv2.setText("");
+			etv3.setText("");
 			break;
 			
 		case R.id.button3:
@@ -85,6 +91,32 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			intent.putExtra("hitokoto", strHitokoto);
 			
 			startActivity(intent);
+			break;
+			
+			
+		//ログインボタンを押したときの処理
+		case R.id.button4:
+			EditText id = (EditText)findViewById(R.id.editText1);
+			
+			String idmsg = id.getText().toString();
+			
+			//MySQLiteOpenHelperのloginに飛ぶ
+			helper.login(sdb, idmsg);
+			
+			//Log.d(x,x);
+			//int c = Integer.parseInt(idmsg);
+			
+			//エディットテキスト１に入力した値をintに変換
+			int c = Integer.parseInt(idmsg);
+			
+			//とりあえす条件式は動く
+			if(c == 1201762){
+				intent = new Intent(this,S.class);
+				startActivity(intent);
+			}else{
+				intent = new Intent(this,T.class);
+				startActivity(intent);
+			}
 			break;
 			
 		

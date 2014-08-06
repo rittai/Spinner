@@ -84,7 +84,8 @@ public class DeleteActivity extends Activity implements
 		 //dblayout:ListViewにさらにレイアウトを指定するもの
 		 int db_layout = android.R.layout.simple_list_item_activated_1;
 		 //form:カーソルからListViewに指定するカラムの値を指定するもの
-		 String[]from = {"pass"};
+		 
+		 String[]from = {"_id"};
 		 //to:Listviewの中に指定したdb_layoutに配置する、各行のview部品のid
 		 int[] to = new int[]{android.R.id.text1};
 		 
@@ -97,7 +98,7 @@ public class DeleteActivity extends Activity implements
 		 lstHitokoto.setAdapter(adapter);
 	 }
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long _id) {
 		// TODO 自動生成されたメソッド・スタブ
 		
 		//前に選択中の行があれば、背景色を透明にする
@@ -110,7 +111,7 @@ public class DeleteActivity extends Activity implements
 		//選択行のレコードを指し示すカーソルを取得
 		SQLiteCursor cursor = (SQLiteCursor)parent.getItemAtPosition(position);
 		//カーソルのレコードから、「_id」の値を取得して記憶
-		this.selectedID = cursor.getInt(cursor.getColumnIndex("id"));
+		this.selectedID = cursor.getInt(cursor.getColumnIndex("_id"));
 		//何行目を選択したかも記憶
 		this.lastPosition = position;
 	}
@@ -177,7 +178,7 @@ public class DeleteActivity extends Activity implements
 		}
 		
 	}
-	private void deleteFromHitokoto(int id) {
+	private void deleteFromHitokoto(int _id) {
 		// TODO 自動生成されたメソッド・スタブ
 		//クラスのフィールド変数がＮＵＬＬなら、データベース空間オープン
 		if(sdb == null){
@@ -190,7 +191,7 @@ public class DeleteActivity extends Activity implements
 			Log.e("ERROR",e.toString());
 		}
 		//MySQLiteOpenHelperにDELETE文を実行させる
-		this.helper.deleteHitokoto(sdb, id);
+		this.helper.deleteHitokoto(sdb, _id);
 	}
 }
 
