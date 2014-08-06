@@ -81,7 +81,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	
 	public void login(SQLiteDatabase db,String idmsg){
 		
-		
+		//学籍番号とDBの_idを比較
 		String sqllogin = "SELECT flg FROM Hitokoto WHERE '1201762' = _id;";
 		
 		try{
