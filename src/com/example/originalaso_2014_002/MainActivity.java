@@ -23,12 +23,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	@Override
 	protected void onResume(){
 	super.onResume();
-	Button btn = (Button)findViewById(R.id.button1);
-    btn.setOnClickListener(this);
+	//Button btn = (Button)findViewById(R.id.button1);
+    //btn.setOnClickListener(this);
     Button btn2 = (Button)findViewById(R.id.button2);
     btn2.setOnClickListener(this);
-    Button btn3 = (Button)findViewById(R.id.button3);
-    btn3.setOnClickListener(this);
+    //Button btn3 = (Button)findViewById(R.id.button3);
+    //btn3.setOnClickListener(this);
     Button btn4 = (Button)findViewById(R.id.button4);
     btn4.setOnClickListener(this);
 
@@ -55,10 +55,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	public void onClick(View v){
 		Intent intent = null;
 		switch(v.getId()){
+		/**
 		case R.id.button1://メンテボタンが押された
 			intent = new Intent(this, DeleteActivity.class);
 			startActivity(intent);
 			break;
+			**/
 
 		case R.id.button2://登録ボタンが押された
 			//エディットテキストからの入力内容を取り出す
@@ -84,7 +86,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			etv2.setText("");
 			etv3.setText("");
 			break;
-
+/**
 		case R.id.button3:
 			//MySQLiteOpenHelperのセレクト一言メソッドを呼び出して一言をランダムに取得
 			String strHitokoto = helper.selectRandomHitokoto(sdb);
@@ -95,7 +97,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 			startActivity(intent);
 			break;
-
+**/
 
 		//ログインボタンを押したときの処理
 		case R.id.button4:
@@ -114,7 +116,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			//エディットテキスト１に入力した値をintに変換
 			//とりあえす条件式は動く
 			if(flgString.equals("1")){
-				intent = new Intent(this,S.class);
+				intent = new Intent(this,ExpandableListViewSample.class);
 				startActivity(intent);
 			}else if(flgString.equals("2")){
 				intent = new Intent(this,T.class);

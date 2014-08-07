@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bak"
+    android:orientation="vertical" >
+
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="情報システム専攻科　３－Ｂ" />
+
+  <ExpandableListView
+      android:id="@+id/ExpandableListView"
+      android:layout_width="fill_parent"
+      android:layout_height="0dip"
+      android:layout_weight="1"
+       >
+
+  </ExpandableListView>
+</LinearLayout>

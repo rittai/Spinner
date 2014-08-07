@@ -37,6 +37,26 @@
         <activity
             android:name=".T"
             android:label="@string/app_name"></activity>
+        <activity 
+            android:name=".ExpandableListViewSample"
+            android:label="@string/app_name"
+            ></activity>
+        <activity 
+            android:name=".MsgActivity"
+            android:label="@string/app_name"
+            ></activity>
+        <activity 
+            android:name=".TeacherActivity"
+            android:label="@string/app_name"
+            ></activity>
+        <activity 
+            android:name=".Test1Activity"
+            android:label="@string/app_name"
+            ></activity>
+        <activity
+            android:name=".Test2Activity"
+            android:label="@string/app_name"
+            ></activity>
     </application>
 
 </manifest>

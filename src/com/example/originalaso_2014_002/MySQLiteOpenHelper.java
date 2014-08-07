@@ -16,7 +16,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 */
 
 	public MySQLiteOpenHelper(Context context){
-		super(context,"20140021201762.sqlite3",null,5);
+		super(context,"20140021201762.sqlite3",null,7);
 	}
 
 
@@ -27,6 +27,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE IF NOT EXISTS " +
 				"Hitokoto(_id integer primary key  not null , pass text, flg integer)");
 
+		db.execSQL("CREATW TABLE IF NOT EXISTS " +
+				"Kind(num integer primary key not null , class text)");
 	}
 
 	@Override
@@ -55,7 +57,27 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			return;
 	}
-
+	
+	public void insertmsg(SQLiteDatabase db,String inputMsg,String inputmsg2){
+		Log.d(inputMsg,inputMsg);
+		Log.d(inputmsg2,inputmsg2);
+		String sqlstr = " insert into kind (num,class) values('" + inputMsg +"','" +inputmsg2 + "');";
+			try{
+				//トランザクション開始
+				db.beginTransaction();
+				db.execSQL(sqlstr);
+				//トランザクション成功
+				db.setTransactionSuccessful();
+			}catch(SQLException e){
+				Log.e("ERROR", e.toString());
+			}finally{
+				//トランザクション終了
+				db.endTransaction();
+			}
+			return;
+	}
+	
+/**
 	public String selectRandomHitokoto(SQLiteDatabase db){
 
 		String rtString = null;
@@ -77,6 +99,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			return rtString;
 	}
+	**/
 
 	public String login(SQLiteDatabase db,String idmsg,String passmsg){
 
@@ -123,12 +146,12 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 * Hitokotoテーブルからデータをすべて取得
 	 * @param SQLいてDatabase SELECTアクセスするDBのインスタンス変数
 	 * @return 取得したデータの塊の表（導出表）のレコードをポイントするカーソル
-	 */
+	 **/
 	public SQLiteCursor selectHitokotoList(SQLiteDatabase db){
 
 		SQLiteCursor cursor = null;
 
-		String sqlstr = "SELECT _id, pass FROM Hitokoto ORDER BY _id;";
+		String sqlstr = "SELECT num, class FROM Kind ORDER BY num;";
 		try{
 			//トランザクション開始
 			cursor = (SQLiteCursor)db.rawQuery(sqlstr, null);

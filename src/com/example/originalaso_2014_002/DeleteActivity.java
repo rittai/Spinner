@@ -16,9 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * @author masatoge
- */
+
 
 public class DeleteActivity extends Activity implements
 	View.OnClickListener,AdapterView.OnItemClickListener{
@@ -85,7 +83,7 @@ public class DeleteActivity extends Activity implements
 		 int db_layout = android.R.layout.simple_list_item_activated_2;
 		 //form:カーソルからListViewに指定するカラムの値を指定するもの
 
-		 String[]from = {"_id","pass"};
+		 String[]from = {"num","class"};
 		 //to:Listviewの中に指定したdb_layoutに配置する、各行のview部品のid
 		 int[] to = new int[]{android.R.id.text1,android.R.id.text2};
 
