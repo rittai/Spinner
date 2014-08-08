@@ -16,7 +16,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 	 */
 
 	public MySQLiteOpenHelper(Context context){
-		super(context,"20140021201762.sqlite3",null,7);
+		super(context,"20140021201762.sqlite3",null,8);
 	}
 
 
@@ -27,8 +27,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE IF NOT EXISTS " +
 				"Hitokoto(_id integer primary key  not null , pass text, flg integer)");
 
-		db.execSQL("CREATW TABLE IF NOT EXISTS " +
-				"Kind(num integer primary key not null , class text)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " +
+				"Kind(num integer not null , class text)");
 	}
 
 	@Override
@@ -57,15 +57,15 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			return;
 	}
-	
-	public void insertmsg(SQLiteDatabase db,String inputMsg,String inputmsg2){
-		Log.d(inputMsg,inputMsg);
-		Log.d(inputmsg2,inputmsg2);
-		String sqlstr = " insert into kind (num,class) values('" + inputMsg +"','" +inputmsg2 + "');";
+	//メッセージの内容を登録するSQL
+	/**
+	public void insertmsg(SQLiteDatabase db,String inputnum,String inputMsg){
+
+		String sqlstr2 = " insert into kind (num,class) values('" + inputnum +"','" +inputMsg + "');";
 			try{
 				//トランザクション開始
 				db.beginTransaction();
-				db.execSQL(sqlstr);
+				db.execSQL(sqlstr2);
 				//トランザクション成功
 				db.setTransactionSuccessful();
 			}catch(SQLException e){
@@ -76,7 +76,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 			}
 			return;
 	}
-	
+	**/
 /**
 	public String selectRandomHitokoto(SQLiteDatabase db){
 
